@@ -17,6 +17,8 @@ function insertAvailabilityColumn(courses) {
         ' auto;">Cupos</div></th>');
   }
 
+  const coursesUsed = {};
+
 	// Add availability column with id
 	table.find('tbody tr').each((index, elem) => {
 		elem = $(elem);
@@ -30,10 +32,17 @@ function insertAvailabilityColumn(courses) {
       currCourse = {courseCRN, courseCode, availabilityId, availability: '-'};
       courses.push(currCourse);
     }
+    coursesUsed[courseCRN] = true;
 		if ($("#" + availabilityId).length > 0) return;
     elem.prepend('<td id="' + availabilityId + '"data-id="' + currId +
         '" data-property="availability" xe-field="availability" class="readonly"' +
         ' style="width: auto;">' + currCourse.availability + '</td>');
+  });
+
+  courses.slice().forEach((course) => {
+    if (!(course.courseCRN in coursesUsed)) {
+      courses.splice(courses.indexOf(course), 1);
+    }
   });
 
   // Return the inserted courses
