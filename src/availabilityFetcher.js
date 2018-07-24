@@ -7,7 +7,7 @@ let availabilityInterval = null;
 // Inserts availability column to the DOM and returns the existing courses
 function insertAvailabilityColumn(courses) {
 	// Find courses table
-	const table = $('#summaryInfo table');
+	const table = $('div.mySchedule-summary table');
 
 	// Add "Cupos" header
   if ($('div[title=Cupos]').length == 0) {
